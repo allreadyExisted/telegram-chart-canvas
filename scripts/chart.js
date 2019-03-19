@@ -1,5 +1,7 @@
-import { getBoxData } from './utils.js'
+import { getBoxData } from './helpers/utils.js'
 import { Line } from './components/line.js'
+import { XAxis } from './components/xaxis.js'
+import { YAxis } from './components/yaxis.js'
 
 export class Chart {
   constructor(element, data) {
@@ -12,6 +14,8 @@ export class Chart {
   }
 
   draw() {
+    this._xAxis.draw()
+    this._yAxis.draw()
     this._lines.forEach(line => {
       line.draw()
     })
@@ -35,18 +39,28 @@ export class Chart {
 
   _setComponents() {
     const { x, y } = this._data
-    this._lines = y.datasets.map(item => new Line(
+    const commonArgs = (opts = {}) => [
       this._ctx,
       {
+        yStart: this._height * .05,
         width: this._width,
-        height: this._height,
+        height: this._height * .95,
+        ...opts
+      }
+    ]
+    
+    this._xAxis = new XAxis(...commonArgs())
+    this._yAxis = new YAxis(...commonArgs())
+
+    this._lines = y.datasets.map(item => new Line(
+      ...commonArgs({
         color: item.color,
         data: {
           x: x.data,
           y: item.data,
           domain: y.domain
         }
-      }
+      })
     ))
   }
 }

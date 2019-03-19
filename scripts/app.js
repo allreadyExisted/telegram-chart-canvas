@@ -1,4 +1,4 @@
-import { fetchAsync, normalizeData } from './utils.js'
+import { fetchAsync, normalizeData } from './helpers/utils.js'
 import { Chart } from './chart.js'
 
 fetchAsync('/data/chart_data.json').then(data => {

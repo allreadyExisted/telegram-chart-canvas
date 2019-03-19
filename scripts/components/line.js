@@ -1,27 +1,13 @@
-const defaultOpts = {
-  width: 0,
-  height: 0,
-  color: '#666',
-  data: {
-    x: [],
-    y: [],
-    domain: [0, 0]
-  }
-}
+import { Element } from './element.js'
 
-export class Line {
-  constructor(ctx, opts = {}) {
-    const options = {
-      ...defaultOpts,
-      ...opts
-    }
-
-    this._options = options
-    this._ctx = ctx
+export class Line extends Element {
+  constructor(ctx, opts) {
+    super(ctx, opts)
   }
 
   draw() {
     const {
+      yStart,
       width,
       height,
       data: { x, y, domain: [_, yMax] }
@@ -31,10 +17,12 @@ export class Line {
     this._ctx.strokeStyle = this._options.color
     this._ctx.beginPath()
     x.forEach((_, index) => {
+      const xPoint = xPerc * index
+      const yPoint = yStart + yPerc * y[index]
       if (index === 0)
-        this._ctx.moveTo(0, yPerc * y[index])
+        this._ctx.moveTo(0, yPoint)
       else
-        this._ctx.lineTo(xPerc * index, yPerc * y[index])
+        this._ctx.lineTo(xPoint, yPoint)
     })
     this._ctx.stroke()
     this._ctx.closePath()
