@@ -54,3 +54,18 @@ export const getBoxData = element => {
     height
   }
 } 
+
+const COUNT_TICKS = 5
+
+export const getTicks = (axisMax, height) =>
+  new Array(COUNT_TICKS + 1)
+    .fill(0)
+    .map((_, index) => {
+      const value = axisMax - (axisMax / COUNT_TICKS) * index
+      const axisPerc = height / axisMax
+
+      return {
+        position: height - axisPerc  * value,
+        value
+      }
+    })

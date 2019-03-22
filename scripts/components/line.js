@@ -18,7 +18,7 @@ export class Line extends Element {
     this._ctx.beginPath()
     x.forEach((_, index) => {
       const xPoint = xPerc * index
-      const yPoint = yStart + yPerc * y[index]
+      const yPoint = height - (yPerc * y[index])
       if (index === 0)
         this._ctx.moveTo(0, yPoint)
       else

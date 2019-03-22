@@ -7,11 +7,11 @@ export class XAxis extends Element {
   }
 
   draw() {
-    const { yStart, width } = this._options
+    const { width, height } = this._options
     this._ctx.strokeStyle = colors.axisColor
     this._ctx.beginPath()
-    this._ctx.moveTo(0, yStart)
-    this._ctx.lineTo(width, yStart)
+    this._ctx.moveTo(0, height)
+    this._ctx.lineTo(width, height)
     this._ctx.stroke()
     this._ctx.closePath()
   }

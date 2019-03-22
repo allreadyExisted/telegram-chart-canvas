@@ -31,8 +31,6 @@ export class Chart {
 
     this._canvas.width = width
     this._canvas.height = height
-    this._ctx.translate(0, height)
-    this._ctx.scale(1, -1)
 
     this._element.appendChild(this._canvas)
   }
@@ -50,7 +48,11 @@ export class Chart {
     ]
     
     this._xAxis = new XAxis(...commonArgs())
-    this._yAxis = new YAxis(...commonArgs())
+    this._yAxis = new YAxis(...commonArgs({
+      data: {
+        domain: y.domain
+      }
+    }))
 
     this._lines = y.datasets.map(item => new Line(
       ...commonArgs({
